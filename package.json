@@ -11,14 +11,9 @@
     "discord.js": "^14.14.1",
     "dotenv": "^16.3.1",
     "node-fetch": "^3.3.2"
+    "node-cron": "^3.x.x"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
   }
-}
-
-"dependencies": {
-    "discord.js": "^14.x.x",
-    "dotenv": "^16.x.x",
-    "node-cron": "^3.x.x"
 }
