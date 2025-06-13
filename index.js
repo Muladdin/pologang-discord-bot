@@ -112,3 +112,58 @@ process.on('SIGTERM', () => {
 client.login(process.env.DISCORD_BOT_TOKEN).catch(error => {
     console.error('❌ Failed to login to Discord:', error);
 });
+
+
+const { Client, GatewayIntentBits } = require('discord.js');
+const dotenv = require('dotenv');
+const cron = require('node-cron');
+
+dotenv.config();
+
+const client = new Client({
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+    ],
+});
+
+client.once('ready', () => {
+    console.log(`Logged in as ${client.user.tag}`);
+    
+    // Schedule the daily post at 12:00 (server time)
+    cron.schedule('0 12 * * *', async () => {
+        try {
+            const channelId = '1045148396350078986';
+            const channel = await client.channels.fetch(channelId);
+            
+            if (!channel) {
+                console.error('Channel not found!');
+                return;
+            }
+
+            // Generate 4-digit numbers
+            const radio = Math.floor(1000 + Math.random() * 9000);
+            const emergencyRadio = Math.floor(1000 + Math.random() * 9000);
+
+            // Replace ROLE_IDs with your actual role IDs
+            const medlemRoleId = 'YOUR_MEDLEM_ROLE_ID';
+            const shababRoleId = 'YOUR_SHABAB_ROLE_ID';
+
+            const messageContent = `
+<@&${medlemRoleId}> <@&${shababRoleId}>
+
+📻 **Radio:** ${radio}  
+🚨 **Nød:** ${emergencyRadio}
+`;
+
+            await channel.send(messageContent);
+
+            console.log('✅ Daily radio message sent!');
+        } catch (error) {
+            console.error('Error sending daily message:', error);
+        }
+    });
+});
+
+client.login(process.env.DISCORD_BOT_TOKEN);
