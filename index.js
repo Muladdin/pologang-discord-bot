@@ -1,4 +1,7 @@
+// Load environment variables
 require('dotenv').config();
+
+// Required libraries
 const { Client, GatewayIntentBits } = require('discord.js');
 const cron = require('node-cron');
 
@@ -15,7 +18,7 @@ const client = new Client({
 // Supabase Edge Function URL
 const SUPABASE_FUNCTION_URL = 'https://oemkxjxyhqvjkxbynpnq.supabase.co/functions/v1/discord-bot';
 
-// Function to call Supabase Edge Function
+// Generic function to call Supabase
 async function callSupabaseFunction(action, data) {
     try {
         const response = await fetch(SUPABASE_FUNCTION_URL, {
@@ -39,9 +42,9 @@ async function callSupabaseFunction(action, data) {
     }
 }
 
-// When bot is ready
+// When the bot is ready
 client.once('ready', () => {
-    console.log(`✅ POLOGANG Discord Bot is now ONLINE as ${client.user.tag}`);
+    console.log(`✅ POLOGANG Discord Bot is ONLINE as ${client.user.tag}`);
     console.log(`📊 Connected to ${client.guilds.cache.size} guild(s)`);
 
     // Set bot status
@@ -50,7 +53,14 @@ client.once('ready', () => {
         status: 'online',
     });
 
-    // Schedule the daily post at 12:00 server time
+    // CRON JOBS
+    setupDailyRadioPost();
+    // You can add more cron jobs here later e.g.:
+    // setupAnotherScheduledPost();
+});
+
+// DAILY RADIO POST (Runs at 12:00 every day)
+function setupDailyRadioPost() {
     cron.schedule('0 12 * * *', async () => {
         try {
             const channelId = '1045148396350078986';
@@ -80,14 +90,19 @@ client.once('ready', () => {
             console.error('Error sending daily message:', error);
         }
     });
-});
 
-// Handle new members joining
+    console.log('📅 Daily radio post scheduled at 12:00!');
+}
+
+// EVENTS
+
+// New member joins
 client.on('guildMemberAdd', async (member) => {
     console.log(`👋 New member joined: ${member.user.username} (${member.user.id})`);
+    // Future: You can add welcome messages here
 });
 
-// Handle members leaving
+// Member leaves
 client.on('guildMemberRemove', async (member) => {
     console.log(`👋 Member left: ${member.user.username} (${member.user.id})`);
 
@@ -97,7 +112,7 @@ client.on('guildMemberRemove', async (member) => {
     });
 });
 
-// Handle role updates
+// Role updates
 client.on('guildMemberUpdate', async (oldMember, newMember) => {
     const oldRoles = oldMember.roles.cache.map(role => role.name);
     const newRoles = newMember.roles.cache.map(role => role.name);
@@ -115,7 +130,7 @@ client.on('guildMemberUpdate', async (oldMember, newMember) => {
     }
 });
 
-// Handle bot errors and warnings
+// Bot errors and warnings
 client.on('error', error => {
     console.error('❌ Discord bot error:', error);
 });
@@ -137,7 +152,7 @@ process.on('SIGTERM', () => {
     process.exit(0);
 });
 
-// Login the bot
+// LOGIN BOT
 client.login(process.env.DISCORD_BOT_TOKEN).catch(error => {
     console.error('❌ Failed to login to Discord:', error);
 });
