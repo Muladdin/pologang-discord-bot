@@ -147,8 +147,8 @@ client.once('ready', () => {
             const emergencyRadio = Math.floor(1000 + Math.random() * 9000);
 
             // Replace ROLE_IDs with your actual role IDs
-            const medlemRoleId = 'YOUR_MEDLEM_ROLE_ID';
-            const shababRoleId = 'YOUR_SHABAB_ROLE_ID';
+            const medlemRoleId = '674647666764021781';
+            const shababRoleId = '1361831885726289940';
 
             const messageContent = `
 <@&${medlemRoleId}> <@&${shababRoleId}>
