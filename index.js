@@ -81,6 +81,8 @@ function setupDailyRadioPost() {
 
 📻 **Radio:** ${radio}  
 🚨 **Nød:** ${emergencyRadio}
+🔫 **Mahmoud: +1**
+🚗 **Boost: -1**
 `;
 
             await channel.send(messageContent);
