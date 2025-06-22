@@ -59,7 +59,7 @@ client.once('ready', () => {
     // setupAnotherScheduledPost();
 });
 
-// DAILY RADIO POST (Runs at 12:00 every day)
+// DAILY RADIO POST (Runs at 10:00 every day)
 function setupDailyRadioPost() {
     cron.schedule('0 10 * * *', async () => {
         try {
