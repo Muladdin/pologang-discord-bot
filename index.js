@@ -75,10 +75,9 @@ function setupDailyRadioPost() {
             const emergencyRadio = Math.floor(1000 + Math.random() * 9000);
 
             const medlemRoleId = '674647666764021781';
-            const shababRoleId = '1361831885726289940';
 
             const messageContent = `
-<@&${medlemRoleId}> <@&${shababRoleId}>
+<@&${medlemRoleId}>
 
 📻 **Radio:** ${radio}  
 🚨 **Nød:** ${emergencyRadio}
