@@ -61,7 +61,7 @@ client.once('ready', () => {
 
 // DAILY RADIO POST (Runs at 12:00 every day)
 function setupDailyRadioPost() {
-    cron.schedule('0 12 * * *', async () => {
+    cron.schedule('0 10 * * *', async () => {
         try {
             const channelId = '1045148396350078986';
             const channel = await client.channels.fetch(channelId);
